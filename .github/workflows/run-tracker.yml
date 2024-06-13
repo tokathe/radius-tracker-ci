@@ -12,3 +12,6 @@ jobs:
         with:
           repository: 'xformation/xformation-alertmanager-ui-plugin'
           path: './tracker'
+      - name: List contents of the tracker directory
+        run: |
+          ls -a tracker
