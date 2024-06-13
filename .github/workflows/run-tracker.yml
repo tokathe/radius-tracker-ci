@@ -8,10 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout target repository
+        uses: actions/checkout@v4
         with:
           repository: 'xformation/xformation-alertmanager-ui-plugin'
           path: './tracker'
+          
       - name: List contents of the tracker directory
         run: |
           ls -a tracker
+
+      - name: Run the tracker
+        run: |
+          npx radius-tracker timelines ./radius-tracker.config.js
+
+      - name: List contents of the tracker directory
+        run: |
+          ls -a tracker 
