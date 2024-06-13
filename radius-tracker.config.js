@@ -1,6 +1,6 @@
 const samples = [
     {
-        repoUrl: 'git@github.com:xformation/xformation-alertmanager-ui-plugin.git',
+        repoUrl: '.',
         displayName: 'xformation-alertmanager',
         isTargetModuleOrPath: {
             grafana: /^@grafana\/ui(?!.*\.s?css$)/,
