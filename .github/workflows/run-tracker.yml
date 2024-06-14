@@ -21,8 +21,10 @@ jobs:
         id: cache-radius-tracker
         uses: actions/cache/restore@v4        
         with: 
-          key: cache-radius-tracker-${{ hashFiles('./radius-tracker.config.js') }}
-          path: radius-tracker-cache
+          key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
+          path: radius-tracker-cache/cache
+          restore-keys: |
+            cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
 
       - name: Run the tracker
         run: |
@@ -35,5 +37,5 @@ jobs:
       - name: Save cache for tracker
         uses: actions/cache/save@v4        
         with: 
-          key: ${{steps.cache-radius-tracker.outputs.cache-primary-key}}     
-          path: radius-tracker-cache          
+          key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}-${{github.run_id}}    
+          path: radius-tracker-cache/cache          
