@@ -17,14 +17,11 @@ jobs:
           repository: 'xformation/xformation-alertmanager-ui-plugin'
           path: './tracker'
           
-      - name: List contents of the tracker directory
-        run: |
-          ls -a tracker
-
       - name: Run the tracker
         run: |
           npx radius-tracker timelines ./radius-tracker.config.js
 
-      - name: List contents of the tracker directory
+      - name: Generate static site
         run: |
-          ls -a tracker 
+          npx radius-tracker report --database usages.sqlite.gz
+           
