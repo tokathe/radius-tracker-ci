@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+     
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
