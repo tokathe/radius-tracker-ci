@@ -3,6 +3,7 @@ name: run-tracker
 on:
   workflow_dispatch:
 
+
 jobs:
   run-tracker:
     runs-on: ubuntu-latest
@@ -17,9 +18,10 @@ jobs:
           path: './tracker'
 
       - name: Restore cache for tracker
+        id: cache-radius-tracker
         uses: actions/cache/restore@v4        
         with: 
-          key: radius-tracker-cache     
+          key: cache-radius-tracker-${{ hashFiles('./radius-tracker.config.js') }}
           path: radius-tracker-cache
 
       - name: Run the tracker
@@ -33,5 +35,5 @@ jobs:
       - name: Save cache for tracker
         uses: actions/cache/save@v4        
         with: 
-          key: radius-tracker-cache     
+          key: ${{steps.cache-radius-tracker.outputs.cache-primary-key}}     
           path: radius-tracker-cache          
