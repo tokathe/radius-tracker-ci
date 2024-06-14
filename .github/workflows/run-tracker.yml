@@ -3,12 +3,68 @@ name: run-tracker
 on:
   workflow_dispatch:
 
+
 jobs:
   run-tracker:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+     
+      - name: Checkout target repository
+        uses: actions/checkout@v4
         with:
           repository: 'xformation/xformation-alertmanager-ui-plugin'
           path: './tracker'
+
+      - name: Restore cache for tracker
+        id: cache-radius-tracker
+        uses: actions/cache/restore@v4        
+        with: 
+          key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
+          path: radius-tracker-cache/cache
+          restore-keys: |
+            cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
+
+      - name: Run the tracker
+        run: |
+          npx radius-tracker timelines ./radius-tracker.config.js
+
+      - name: Save cache for tracker
+        uses: actions/cache/save@v4        
+        with: 
+          key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}-${{github.run_id}}    
+          path: radius-tracker-cache/cache
+      
+      - name: Upload database artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracker-database
+          path: usages.sqlite.gz
+          
+          
+  build-static-site:
+    runs-on: ubuntu-latest
+    needs: run-tracker
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tracker-database
+
+      - name: Generate static site
+        run: |
+          npx radius-tracker report --database usages.sqlite.gz
+      
+      - name: Upload static site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: radius-tracker-report/
+
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    needs: build-static-site
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy-pages
+        uses: actions/deploy-pages@v4
