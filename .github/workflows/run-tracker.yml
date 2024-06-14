@@ -15,7 +15,13 @@ jobs:
         with:
           repository: 'xformation/xformation-alertmanager-ui-plugin'
           path: './tracker'
-          
+
+      - name: Restore cache for tracker
+        uses: actions/cache/restore@v4        
+        with: 
+          key: radius-tracker-cache     
+          path: radius-tracker-cache
+
       - name: Run the tracker
         run: |
           npx radius-tracker timelines ./radius-tracker.config.js
@@ -23,7 +29,9 @@ jobs:
       - name: Generate static site
         run: |
           npx radius-tracker report --database usages.sqlite.gz
-          
-      - name: List files
-        run: |
-          ls -al
+
+      - name: Save cache for tracker
+        uses: actions/cache/save@v4        
+        with: 
+          key: radius-tracker-cache     
+          path: radius-tracker-cache          
