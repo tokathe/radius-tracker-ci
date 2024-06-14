@@ -6,7 +6,6 @@ on:
 jobs:
   run-tracker:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
@@ -24,4 +23,7 @@ jobs:
       - name: Generate static site
         run: |
           npx radius-tracker report --database usages.sqlite.gz
-           
+          
+      - name: List files
+        run: |
+          ls -al
