@@ -2,7 +2,11 @@ name: run-tracker
 
 on:
   workflow_dispatch:
-
+    inputs:
+      repository:
+        description: 'Repository to checkout'
+        required: true
+        default: 'xformation/xformation-alertmanager-ui-plugin'
 
 jobs:
   run-tracker:
@@ -14,7 +18,7 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v4
         with:
-          repository: 'xformation/xformation-alertmanager-ui-plugin'
+          repository: ${{ github.event.inputs.repository }}
           path: './tracker'
 
       - name: Restore cache for tracker
@@ -22,7 +26,7 @@ jobs:
         uses: actions/cache/restore@v4        
         with: 
           key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
-          path: radius-tracker-cache/cache
+          path: radius-tracker-cache
           restore-keys: |
             cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
 
@@ -34,7 +38,7 @@ jobs:
         uses: actions/cache/save@v4        
         with: 
           key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}-${{github.run_id}}    
-          path: radius-tracker-cache/cache
+          path: radius-tracker-cache
       
       - name: Upload database artifact
         uses: actions/upload-artifact@v4

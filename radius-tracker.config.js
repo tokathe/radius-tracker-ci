@@ -1,7 +1,7 @@
 const samples = [
     {
         repoUrl: './tracker',
-        displayName: 'xformation-alertmanager',
+        displayName: 'tracked-repository',
         isTargetModuleOrPath: {
             grafana: /^@grafana\/ui(?!.*\.s?css$)/,
             mui: /^(@mui|@material-ui)/,
