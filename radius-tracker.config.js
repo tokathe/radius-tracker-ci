@@ -1,7 +1,7 @@
 const samples = [
     {
         repoUrl: './tracker',
-        displayName: 'tracked-re',
+        displayName: 'tracked-repository',
         isTargetModuleOrPath: {
             grafana: /^@grafana\/ui(?!.*\.s?css$)/,
             mui: /^(@mui|@material-ui)/,
