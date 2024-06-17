@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache/restore@v4        
         with: 
           key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
-          path: radius-tracker-cache/cache
+          path: radius-tracker-cache
           restore-keys: |
             cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}
 
@@ -38,7 +38,7 @@ jobs:
         uses: actions/cache/save@v4        
         with: 
           key: cache-radius-tracker-${{hashFiles('radius-tracker.config.js')}}-${{github.run_id}}    
-          path: radius-tracker-cache/cache
+          path: radius-tracker-cache
       
       - name: Upload database artifact
         uses: actions/upload-artifact@v4
