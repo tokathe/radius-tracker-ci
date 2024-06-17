@@ -7,11 +7,6 @@ on:
         description: 'Repository to checkout'
         required: true
         default: 'xformation/xformation-alertmanager-ui-plugin'
-    inputs:
-      repository:
-        description: 'Repository to checkout'
-        required: true
-        default: 'xformation/xformation-alertmanager-ui-plugin'
 
 jobs:
   run-tracker:
