@@ -2,11 +2,6 @@ name: run-tracker
 
 on:
   workflow_dispatch:
-    inputs:
-      repository:
-        description: 'Repository to checkout'
-        required: true
-        default: 'xformation/xformation-alertmanager-ui-plugin'
 
 jobs:
   run-tracker:
@@ -14,13 +9,6 @@ jobs:
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
-     
-      - name: Checkout target repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          repository: ${{ github.event.inputs.repository }}
-          path: './tracker'
 
       - name: Restore cache for tracker
         id: cache-radius-tracker
